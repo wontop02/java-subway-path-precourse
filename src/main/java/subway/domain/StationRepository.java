@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class StationRepository {
+    private static final String NOT_FOUND_STATION = "해당 역을 찾을 수 없습니다.";
+
     private static final List<Station> stations = new ArrayList<>();
 
     public static List<Station> stations() {
@@ -22,5 +24,12 @@ public class StationRepository {
 
     public static void deleteAll() {
         stations.clear();
+    }
+
+    public static Station findByName(String name) {
+        return stations.stream()
+                .filter(l -> l.getName().equals(name))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(NOT_FOUND_STATION));
     }
 }
