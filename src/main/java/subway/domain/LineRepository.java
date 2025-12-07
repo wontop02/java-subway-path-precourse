@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class LineRepository {
+    private static final String NOT_FOUND_LINE = "해당 라인을 찾을 수 없습니다.";
+
     private static final List<Line> lines = new ArrayList<>();
 
     public static List<Line> lines() {
@@ -22,5 +24,12 @@ public class LineRepository {
 
     public static void deleteAll() {
         lines.clear();
+    }
+
+    public static Line findByName(String name) {
+        return lines.stream()
+                .filter(l -> l.getName().equals(name))
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException(NOT_FOUND_LINE));
     }
 }
