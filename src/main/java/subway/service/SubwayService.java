@@ -94,14 +94,12 @@ public class SubwayService {
     private WeightedMultigraph<Station, DefaultWeightedEdge> makeTimeGraph() {
         WeightedMultigraph<Station, DefaultWeightedEdge> graph
                 = new WeightedMultigraph(DefaultWeightedEdge.class);
-        for (Line line : LineRepository.lines()) {
-            for (Section section : line.getSections()) {
-                Station upStation = section.getUpStation();
-                Station downStation = section.getDownStation();
-                graph.addVertex(upStation);
-                graph.addVertex(downStation);
-                graph.setEdgeWeight(graph.addEdge(upStation, downStation), section.getTime());
-            }
+        for (Section section : SectionRepository.sections()) {
+            Station upStation = section.getUpStation();
+            Station downStation = section.getDownStation();
+            graph.addVertex(upStation);
+            graph.addVertex(downStation);
+            graph.setEdgeWeight(graph.addEdge(upStation, downStation), section.getTime());
         }
         return graph;
     }
