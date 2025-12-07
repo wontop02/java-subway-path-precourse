@@ -79,14 +79,12 @@ public class SubwayService {
     private WeightedMultigraph<Station, DefaultWeightedEdge> makeDistanceGraph() {
         WeightedMultigraph<Station, DefaultWeightedEdge> graph
                 = new WeightedMultigraph(DefaultWeightedEdge.class);
-        for (Line line : LineRepository.lines()) {
-            for (Section section : line.getSections()) {
-                Station upStation = section.getUpStation();
-                Station downStation = section.getDownStation();
-                graph.addVertex(upStation);
-                graph.addVertex(downStation);
-                graph.setEdgeWeight(graph.addEdge(upStation, downStation), section.getDistance());
-            }
+        for (Section section : SectionRepository.sections()) {
+            Station upStation = section.getUpStation();
+            Station downStation = section.getDownStation();
+            graph.addVertex(upStation);
+            graph.addVertex(downStation);
+            graph.setEdgeWeight(graph.addEdge(upStation, downStation), section.getDistance());
         }
         return graph;
     }
